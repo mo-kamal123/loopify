@@ -1,15 +1,19 @@
 .none {
-    display: none !important; 
+  display: none !important;
 }
 
-body{
-    overflow-x: hidden;
+body {
+  overflow-x: hidden;
 }
 
-.disapear{
-    opacity: 0 !important;
+.disapear {
+  opacity: 0 !important;
 }
 
 #alert {
-    z-index: 100 !important;
+  z-index: 100 !important;
+}
+
+.liked {
+  color: rgb(182, 34, 34) !important;
 }

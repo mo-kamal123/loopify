@@ -1,85 +1,93 @@
 const Base_URL = "https://tarmeezacademy.com/api/v1";
-let user = JSON.parse(localStorage.getItem("user"))
-let body = document.getElementsByClassName("post")[0]
-let loggedIn = false  
+let user = JSON.parse(localStorage.getItem("user"));
+let body = document.getElementsByClassName("post")[0];
+let loggedIn = false;
 const form = document.getElementById("form");
 const form1 = document.getElementById("form1");
 const form3 = document.getElementById("form3");
 // Add an event listener for the submit event
-form.addEventListener("submit", function(event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault(); // Prevents the form from refreshing the page
-  });
-  form1.addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevents the form from refreshing the page
-  });
-form3.addEventListener("submit", function(event) {
+});
+form1.addEventListener("submit", function (event) {
   event.preventDefault(); // Prevents the form from refreshing the page
-  });
+});
+form3.addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevents the form from refreshing the page
+});
 
-  // login process 
+// login process
 const login = () => {
-  const user = document.getElementById("username").value
-  const password = document.getElementById("password").value
+  const user = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
   let params = {
-    "username" : user ,
-    "password" : password
-    
-  }
+    username: user,
+    password: password,
+  };
   // console.log(user);
   // console.log(password);
-  const url = `${Base_URL}/login`
-  axios.post(url,params)
-    .then((Response)=>{
-        // console.log(Response)
-        localStorage.setItem("token", Response.data.token)
-        localStorage.setItem("user",JSON.stringify(Response.data.user))
-        localStorage.setItem("loggenIn", true)
-        localStorage.setItem("profile", Response.data.user.profile_image)
-        showlogBtn()
-        location.reload()
-}).catch((err) => {
-  document.getElementById("logError").innerHTML = err.response.data.message
-})}
+  const url = `${Base_URL}/login`;
+  axios
+    .post(url, params)
+    .then((Response) => {
+      // console.log(Response)
+      localStorage.setItem("token", Response.data.token);
+      localStorage.setItem("user", JSON.stringify(Response.data.user));
+      localStorage.setItem("loggenIn", true);
+      localStorage.setItem("profile", Response.data.user.profile_image);
+      showlogBtn();
+      location.reload();
+    })
+    .catch((err) => {
+      document.getElementById("logError").innerHTML = err.response.data.message;
+    });
+};
 //  login()
 
 const register = () => {
-  const url = `${Base_URL}/register`
-  const user = document.getElementById("regUsername").value
-  const email = document.getElementById("regEmail").value
-  const password = document.getElementById("regPassword").value
-  const image = document.getElementById("image").files[0]
-  const name = document.getElementById("name").value
+  const url = `${Base_URL}/register`;
+  const user = document.getElementById("regUsername").value;
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+  const image = document.getElementById("image").files[0];
+  const name = document.getElementById("name").value;
   const headers = {
-    "Content-Type": "multipart/form-data"
-  }
-  const formdata = new FormData()
-  formdata.append("username",user)
-  formdata.append("email",email)
-  formdata.append("password",password)
-  formdata.append("name",name)
-  formdata.append("image",image)
-  axios.post(url, formdata, {headers: headers}).then((res) => {
-    let token = res.data.token
-    let user = res.data.user
-    localStorage.setItem("token", token)
-    localStorage.setItem("user", JSON.stringify(user))
-    localStorage.setItem("loggenIn", true)
-    localStorage.setItem("profile", res.data.user.profile_image)
-    // console.log(res);
-    location.reload()
-  }).catch((err) => {
-    // console.log(err);
-    document.getElementById("rigError").innerHTML = err.response.data.message
-  });
-}
+    "Content-Type": "multipart/form-data",
+  };
+  const formdata = new FormData();
+  formdata.append("username", user);
+  formdata.append("email", email);
+  formdata.append("password", password);
+  formdata.append("name", name);
+  formdata.append("image", image);
+  axios
+    .post(url, formdata, { headers: headers })
+    .then((res) => {
+      let token = res.data.token;
+      let user = res.data.user;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("loggenIn", true);
+      localStorage.setItem("profile", res.data.user.profile_image);
+      // console.log(res);
+      location.reload();
+    })
+    .catch((err) => {
+      // console.log(err);
+      document.getElementById("rigError").innerHTML = err.response.data.message;
+    });
+};
 
 const logout = () => {
-  localStorage.clear()
-  location.reload()
-}
+  localStorage.clear();
+  location.reload();
+};
 
-let profilePic = () => localStorage.getItem("profile") ?  profile.src = localStorage.getItem("profile") : null
-profilePic()
+let profilePic = () =>
+  localStorage.getItem("profile")
+    ? (profile.src = localStorage.getItem("profile"))
+    : null;
+profilePic();
 
 const closeModal = (id) => {
   const modal = document.getElementById(id);
@@ -89,26 +97,25 @@ const closeModal = (id) => {
   if (dropdown) {
     dropdown.classList.add("hidden"); // Hide dropdown if it's open
   }
-}
+};
 
 const showlogBtn = () => {
-  const userPic = document.getElementById("userPic")
+  const userPic = document.getElementById("userPic");
   const dropdown = document.getElementById("yourDropdownId");
-  const createpost = document.getElementById("createPost")
+  const createpost = document.getElementById("createPost");
   // console.log(createpost);
-  if(localStorage.getItem("loggenIn")){
-      userPic.classList.remove("none")
-      dropdown.classList.add("none")
-      createpost.classList.remove("none")
-      profilePic()
-    } else {
-        userPic.classList.add("none")
-        dropdown.classList.remove("none")
-        createpost.classList.add("none")
-      }
-}
-showlogBtn()
-
+  if (localStorage.getItem("loggenIn")) {
+    userPic.classList.remove("none");
+    dropdown.classList.add("none");
+    createpost.classList.remove("none");
+    profilePic();
+  } else {
+    userPic.classList.add("none");
+    dropdown.classList.remove("none");
+    createpost.classList.add("none");
+  }
+};
+showlogBtn();
 
 let currentPage = 1;
 let isFetching = false;
@@ -166,7 +173,11 @@ const getPosts = async (page) => {
                 <p class="text-lg">${post.body}</p>
               </div>
               <div class="card-actions flex justify-start items-center">
-                <button class="btn btn-sm btn-outline btn-error">like</button>
+                <button id="like" onclick="addLike()" class="btn btn-sm transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                  </svg>
+                </button>
                 <button onclick="comment(${post.id})" id="comicon" class="btn btn-sm"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="80" height="80" viewBox="0,0,256,256">
               <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,4.0625c-12.58594,0 -22.9375,8.86328 -22.9375,19.9375c0,6.42578 3.5625,12.09375 8.9375,15.71875c-0.00781,0.21484 0,0.54688 -0.28125,1.59375c-0.34766,1.29297 -1.03516,3.125 -2.46875,5.15625l-1.03125,1.4375l1.78125,0.03125c6.17578,0.02734 9.75391,-4.03125 10.3125,-4.6875c1.82422,0.40625 3.72266,0.6875 5.6875,0.6875c12.58203,0 22.9375,-8.86328 22.9375,-19.9375c0,-11.07422 -10.35547,-19.9375 -22.9375,-19.9375zM25,5.9375c11.71484,0 21.0625,8.15234 21.0625,18.0625c0,9.91016 -9.34766,18.0625 -21.0625,18.0625c-2.00391,0 -3.94922,-0.24219 -5.78125,-0.6875l-0.5625,-0.125l-0.375,0.46875c0,0 -2.89062,3.25781 -7.5,4.03125c0.83203,-1.49219 1.46484,-2.87891 1.75,-3.9375c0.39844,-1.48047 0.40625,-2.5 0.40625,-2.5v-0.5l-0.4375,-0.28125c-5.22656,-3.3125 -8.5625,-8.58984 -8.5625,-14.53125c0,-9.91016 9.34375,-18.0625 21.0625,-18.0625z"></path></g></g>
               </svg> ${post.comments_count}</button>
@@ -193,7 +204,8 @@ const getPosts = async (page) => {
 };
 
 window.addEventListener("scroll", () => {
-  const endOfPage = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100; // Added buffer
+  const endOfPage =
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100; // Added buffer
   if (endOfPage && !isFetching && hasMorePosts) {
     getPosts(currentPage + 1);
   }
@@ -227,45 +239,52 @@ const createPost = () => {
   formData.append("body", body);
   formData.append("title", title);
   formData.append("image", img);
-  
+
   let token = localStorage.getItem("token");
   const url = `${Base_URL}/posts`;
 
   // Show loader before the request starts
   loading(true);
 
-  axios.post(url, formData, {
-    headers: {
-      "authorization": `Bearer ${token}`
-    }
-  })
-  .then((res) => {
-    // console.log(res);
-    showAlert("Post created successfully!", "success");
-    location.reload();
-  })
-  .catch((err) => {
-    showAlert(`${err.response?.data?.message || "An error occurred"}`, "error");
-    // console.error(err);
-  })
-  .finally(() => {
-    // Hide loader after the request is complete
-    loading(false);
-  });
+  axios
+    .post(url, formData, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      // console.log(res);
+      showAlert("Post created successfully!", "success");
+      location.reload();
+    })
+    .catch((err) => {
+      showAlert(
+        `${err.response?.data?.message || "An error occurred"}`,
+        "error"
+      );
+      // console.error(err);
+    })
+    .finally(() => {
+      // Hide loader after the request is complete
+      loading(false);
+    });
 };
 
-const comment =(id) => {
+const comment = (id) => {
   // alert("hii" + id)
-  axios.get(`${Base_URL}/posts/${id}`).then((res) => {
-    console.log(res);
-    let post = res.data.data
-    let postComments = ""
-    commentConatiner = document.getElementById(post.id)
-    let comments = res.data.data.comments
-    // commentConatiner.style.height = '100px'
-    if (comments.length > 0 || commentConatiner != "") {
-      comments.forEach((comment) => {
-        postComments += `
+  document.getElementById(`comment-${id}`).focus();
+  axios
+    .get(`${Base_URL}/posts/${id}`)
+    .then((res) => {
+      console.log(res);
+      let post = res.data.data;
+      let postComments = "";
+      commentConatiner = document.getElementById(post.id);
+      let comments = res.data.data.comments;
+      // commentConatiner.style.height = '100px'
+      if (comments.length > 0 || commentConatiner != "") {
+        comments.forEach((comment) => {
+          postComments += `
           <div class="flex gap-2 my-2 p-2">
             <div class="avatar">
               <div class="w-6 h-6 md:w-10 md:h-10 rounded-full">
@@ -277,50 +296,53 @@ const comment =(id) => {
               <p class="ml-2">${comment.body}</p>
             </div>
           </div>
-        `
-        commentConatiner.classList.add("md:h-56")
-        commentConatiner.classList.add("h-20")  
-        commentConatiner.innerHTML = postComments
-      })
-    } else {
-      commentConatiner.innerHTML = "<p class='text-red-400'>There Is not comments to show now</p>"
-      
-    }
-    removeEventListener("click",comment)
-    console.log(comments);
-    console.log(post);
-  }).catch((err) => {
-    console.log(err);
-  });
-}
-
+        `;
+          commentConatiner.classList.add("md:h-56");
+          commentConatiner.classList.add("h-20");
+          commentConatiner.innerHTML = postComments;
+        });
+      } else {
+        commentConatiner.innerHTML =
+          "<p class='text-red-400'>There Is not comments to show now</p>";
+      }
+      removeEventListener("click", comment);
+      console.log(comments);
+      console.log(post);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const addComment = (id) => {
-  const body = document.getElementById(`comment-${id}`).value
-  let token = localStorage.getItem("token")
+  const body = document.getElementById(`comment-${id}`).value;
+  let token = localStorage.getItem("token");
   const params = {
-      "body": body
-  }
+    body: body,
+  };
 
-  const url = `${Base_URL}/posts/${id}/comments`
-  console.log(token)
-  console.log(body)
-  axios.post(url, params, {
-    headers :  {
-      "authorization": `Bearer ${token}`
-    }
-  }).then((res) => {
-    // console.log(res);
-    location.reload()
-  }).catch((err) => {
-    console.log(err);
-  });
-}
+  const url = `${Base_URL}/posts/${id}/comments`;
+  console.log(token);
+  console.log(body);
+  axios
+    .post(url, params, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      // console.log(res);
+      location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-const showAlert = (message , status) => {
-  let alertContainer = document.getElementById("alert")
+const showAlert = (message, status) => {
+  let alertContainer = document.getElementById("alert");
   let alert = `
-  <div role="alert" class="alert alert-${status}">
+  <div role="alert" class="flex items-center alert alert-${status}">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="h-6 w-6 shrink-0 stroke-current"
@@ -334,18 +356,19 @@ const showAlert = (message , status) => {
   </svg>
   <span>${message}</span>
   </div>
-`
-alertContainer.innerHTML = alert
-setTimeout(() => {
-  document.getElementById("alert").classList.add("disapear")
-}, 3000)
-setTimeout(() => {
-  alertContainer.innerHTML= ""
-  document.getElementById("alert").classList.remove("disapear")
+`;
+  alertContainer.innerHTML = alert;
+  setTimeout(() => {
+    document.getElementById("alert").classList.add("disapear");
+  }, 3000);
+  setTimeout(() => {
+    alertContainer.innerHTML = "";
+    document.getElementById("alert").classList.remove("disapear");
+  }, 4000);
+};
 
-}, 4000)
+if (user) {
+  showAlert(`Hi ${user.name}, Hope you Ok 🤨 `, "success");
 }
 
-if(user) {
-  showAlert(`Hi ${user.name}, Hope you Ok 🤨 `, "success")
-}
+const addLike = () => document.getElementById("like").classList.toggle("liked");

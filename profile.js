@@ -1,21 +1,24 @@
 const Base_URL = "https://tarmeezacademy.com/api/v1";
-let user = JSON.parse(localStorage.getItem("user"))
+let user = JSON.parse(localStorage.getItem("user"));
 const changeUi = () => {
-    axios.get(`${Base_URL}/users/${user.id}`).then((res) => {
-        console.log(res);
-        let postCount = res.data.data.posts_count
-        let commentsCount = res.data.data.comments_count
-        document.getElementById("totalPosts").innerHTML = postCount
-        document.getElementById("totalCom").innerHTML = commentsCount
-    }).catch((err) => {
-        console.log(err);
+  axios
+    .get(`${Base_URL}/users/${user.id}`)
+    .then((res) => {
+      console.log(res);
+      let postCount = res.data.data.posts_count;
+      let commentsCount = res.data.data.comments_count;
+      document.getElementById("totalPosts").innerHTML = postCount;
+      document.getElementById("totalCom").innerHTML = commentsCount;
+    })
+    .catch((err) => {
+      console.log(err);
     });
-    console.log(user);
-    let content = `
-    <div class="flex justify-between w-[80%]">
-    <div class="stats shadow">
+  console.log(user);
+  let content = `
+    <div class="flex justify-between items-center w-[95%] md:w-[80%]">
+    <div class="stats shadow overflow-x-hidden mb-[70px]">
         <div class="stat flex flex-col items-center justify-center">
-            <div class="stat-title">Total Posts</div>
+            <div class="stat-title text-[12px] md:text-base">Total Posts</div>
             <div id="totalPosts" class="stat-value">0</div>
         </div>
     </div>
@@ -26,31 +29,32 @@ const changeUi = () => {
             <h1 class="text-2xl font-semibold mt-5">${user.username}</h1>
             <h1 class="text-xl font-light">${user.email}</h1>
     </div>
-    <div class="stats shadow">
+    <div class="stats shadow overflow-x-hidden mb-[70px]">
         <div class="stat flex flex-col items-center justify-center">
-            <div class="stat-title">Total Comments</div>
-            <div id="totalCom" class="stat-value">0</div>
+            <div class="stat-title text-[12px] md:text-base">Total Comments</div>
+            <div id="totalCom" class="stat-value ">0</div>
         </div>
     </div>
 </div>
-    `
-    document.getElementById("userInfo").innerHTML = content
-}
-if(user) {
-    changeUi()
-}else {
-    location.replace("index.html")
+    `;
+  document.getElementById("userInfo").innerHTML = content;
+};
+if (user) {
+  changeUi();
+} else {
+  location.replace("index.html");
 }
 
 const getUserPosts = (id) => {
-
-    axios.get(`${Base_URL}/users/${id}/posts`).then((res) => {
-        const posts = res.data.data
-        let content = `<div class=" text-red-500 text-2xl font-semibold text-center mt-20">You Don't Have Posts Yet</div>`
-        if(posts) {
-            content = ""
-            posts.forEach((post) => {
-                content += `
+  axios
+    .get(`${Base_URL}/users/${id}/posts`)
+    .then((res) => {
+      const posts = res.data.data;
+      let content = `<div class=" text-red-500 text-2xl font-semibold text-center mt-20">You Don't Have Posts Yet</div>`;
+      if (posts) {
+        content = "";
+        posts.forEach((post) => {
+          content += `
                   <div class="card lg:card-side bg-base-100 shadow-xl m-auto my-10 w-[90%] md:w-[80] border-[1px] border-gray-500 overflow-hidden">
 
                     <figure class="lg:w-[70%]">
@@ -71,14 +75,16 @@ const getUserPosts = (id) => {
                           <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                             <li>
                             <a><!-- Open the modal using ID.showModal() method -->
-                          <button class="edit btn" onclick="openEdit('my_modal_${post.id}')">Edit</button>
+                          <button class="edit btn w-[170px]" onclick="openEdit('my_modal_${post.id}')">Edit</button>
                           <dialog id="my_modal_${post.id}" class="modal">
                           <div class="modal-box">
                           <h3 class="text-lg font-bold">Edit Your Post!</h3>
-                          <p class="py-4">your Post body : ${ post.body}</p>
+                          <p class="py-4">your Post body : ${post.body}</p>
+                          <div class="flex flex-col md:flex-row gap-4">
                           <label>New Body : </label>
                           <input id="newBodya${post.id}" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs mx-1" />
                           <button type="submit" class="btn btn-active btn-primary" onclick="editPost(${post.id},'newBodya${post.id}')">Edit</button>
+                          </div>
                           </div>
                           <form method="dialog" class="modal-backdrop">
                               <button>close</button>
@@ -87,9 +93,9 @@ const getUserPosts = (id) => {
                             </li>
                             <li>
                             <a><!-- Open the modal using ID.showModal() method -->
-                            <button class="delete btn" onclick="openDelete('delmy_modal_${post.id}')">Delete</button>
+                            <button class="delete btn w-[170px]" onclick="openDelete('delmy_modal_${post.id}')">Delete</button>
                             <dialog id="delmy_modal_${post.id}" class="modal">
-                            <div class="modal-box">
+                            <div class="modal-box ">
                                 <h3 class="text-lg font-bold">Delete!</h3>
                                 <p class="py-4">Are You Sure You Need To Delete This Post</p>
                                 <button class="btn btn-error btn-sm" onclick="deletePost(${post.id})">delete</button>
@@ -126,29 +132,37 @@ const getUserPosts = (id) => {
                       </div>
                     </div>
                   </div>`;
-                  console.log(post.id);
-                });
-            }
-            document.getElementById("userPosts").innerHTML = content 
-        console.log(posts);
-    }).catch((err) => {
-        console.log(err);
+          console.log(post.id);
+        });
+      }
+      document.getElementById("userPosts").innerHTML = content;
+      console.log(posts);
+    })
+    .catch((err) => {
+      console.log(err);
     });
-}
-getUserPosts(user.id)
+};
+getUserPosts(user.id);
 
-const openEdit = (id) => document.getElementById(id) ? document.getElementById(id).showModal() : console.log("not found")
-const openDelete = (id) => document.getElementById(id) ? document.getElementById(id).showModal() : console.log("not found")
+const openEdit = (id) =>
+  document.getElementById(id)
+    ? document.getElementById(id).showModal()
+    : console.log("not found");
+const openDelete = (id) =>
+  document.getElementById(id)
+    ? document.getElementById(id).showModal()
+    : console.log("not found");
 
-
-const usercomment =(id) => {
-    // alert("hii" + id)
-    axios.get(`${Base_URL}/posts/${id}`).then((res) => {
+const usercomment = (id) => {
+  // alert("hii" + id)
+  axios
+    .get(`${Base_URL}/posts/${id}`)
+    .then((res) => {
       console.log(res);
-      let post = res.data.data
-      let postComments = ""
-      commentConatiner = document.getElementById(post.id)
-      let comments = res.data.data.comments
+      let post = res.data.data;
+      let postComments = "";
+      commentConatiner = document.getElementById(post.id);
+      let comments = res.data.data.comments;
       // commentConatiner.style.height = '100px'
       if (comments.length > 0 || commentConatiner != "") {
         comments.forEach((comment) => {
@@ -164,87 +178,95 @@ const usercomment =(id) => {
                 <p class="ml-2">${comment.body}</p>
               </div>
             </div>
-          `
-          commentConatiner.classList.add("md:h-56")
-          commentConatiner.classList.add("h-20")  
-          commentConatiner.innerHTML = postComments
-        })
+          `;
+          commentConatiner.classList.add("md:h-56");
+          commentConatiner.classList.add("h-20");
+          commentConatiner.innerHTML = postComments;
+        });
       } else {
-        commentConatiner.innerHTML = "<p class='text-red-400'>There Is not comments to show now</p>"
-        
+        commentConatiner.innerHTML =
+          "<p class='text-red-400'>There Is not comments to show now</p>";
       }
-      removeEventListener("click",comment)
+      removeEventListener("click", comment);
       console.log(comments);
       console.log(post);
-    }).catch((err) => {
+    })
+    .catch((err) => {
       console.log(err);
     });
-}
-
+};
 
 const useraddComment = (id) => {
-    const body = document.getElementById(`comment-${id}`).value
-    let token = localStorage.getItem("token")
-    const params = {
-        "body": body
-    }
-    const url = `${Base_URL}/posts/${id}/comments`
-    console.log(token)
-    console.log(body)
-    axios.post(url, params, {
-      headers :  {
-        "authorization": `Bearer ${token}`
-      }
-    }).then((res) => {
+  const body = document.getElementById(`comment-${id}`).value;
+  let token = localStorage.getItem("token");
+  const params = {
+    body: body,
+  };
+  const url = `${Base_URL}/posts/${id}/comments`;
+  console.log(token);
+  console.log(body);
+  axios
+    .post(url, params, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
       console.log(res);
-      location.reload()
-    }).catch((err) => {
+      location.reload();
+    })
+    .catch((err) => {
       console.log(err);
     });
-}
+};
 
 const logout = () => {
-    localStorage.clear()
-    location.replace("index.html")
-}
+  localStorage.clear();
+  location.replace("index.html");
+};
 
 const editPost = (id, body) => {
-  const url =`${Base_URL}/posts/${id}`
-  const token = localStorage.getItem("token")
-  let newBody = document.getElementById(body).value
+  const url = `${Base_URL}/posts/${id}`;
+  const token = localStorage.getItem("token");
+  let newBody = document.getElementById(body).value;
   const params = {
-    "body" : newBody
-  }
-  console.log(body)
+    body: newBody,
+  };
+  console.log(body);
   console.log(params);
-    axios.put(url,params,{
-      headers : {
-        "authorization": `Bearer ${token}` 
-      }
-    }).then((res) => {
-        console.log(res);
-        location.reload()
-    }).catch((err) => {
-        console.log(err);
+  axios
+    .put(url, params, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
     });
-
-}
+};
 
 const deletePost = (id) => {
-  const token = localStorage.getItem("token")
-  let url = `${Base_URL}/posts/${id}`
+  const token = localStorage.getItem("token");
+  let url = `${Base_URL}/posts/${id}`;
   console.log(id);
-  axios.delete(url, {
-    headers : {
-      "authorization": `Bearer ${token}` 
-    }
-  }).then((res) => {
-    console.log(res);
-    location.reload()
-  }).catch((err) => {
-    console.log(err);
-  });
-}
+  axios
+    .delete(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const closeModal = (id) => {
   const modal = document.getElementById(id);
@@ -254,28 +276,7 @@ const closeModal = (id) => {
   if (dropdown) {
     dropdown.classList.add("hidden"); // Hide dropdown if it's open
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 
 // <a><!-- Open the modal using ID.showModal() method -->
 // <button class="btn" onclick="openEdit('my_modal_2')">Edit</button>
@@ -290,7 +291,8 @@ const closeModal = (id) => {
 // </dialog></a>
 // </li>
 // <li onclick="">
-{/* <a><!-- Open the modal using ID.showModal() method -->
+{
+  /* <a><!-- Open the modal using ID.showModal() method -->
 <button class="delete btn" onclick="openDelete('my_modal_1')">Delete</button>
 <dialog id="my_modal_1" class="modal">
 <div class="modal-box">
@@ -300,4 +302,5 @@ const closeModal = (id) => {
 <form method="dialog" class="modal-backdrop">
     <button>close</button>
 </form>
-</dialog></a> */}
+</dialog></a> */
+}
