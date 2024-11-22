@@ -1,0 +1,15 @@
+.none {
+    display: none !important; 
+}
+
+body{
+    overflow-x: hidden;
+}
+
+.disapear{
+    opacity: 0 !important;
+}
+
+#alert {
+    z-index: 100 !important;
+}

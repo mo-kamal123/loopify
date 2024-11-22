@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Loopify</title>
+  </head>
+  <body>
+    <div class="body overflow-hidden">
+      <!-- start navbar -->
+      <div class="navbar bg-base-100 fixed top-0 left-0 z-30 drop-shadow-md w-[390px] sm:w-full">
+          <div class="navbar-start">
+              <div class="dropdown">
+                  <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                      <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h7"
+                />
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li><a href="index.html">Homepage</a></li>
+              <!-- <li><a>profile</a></li> -->
+            </ul>
+          </div>
+        </div>
+        <div class="navbar-center">
+          <a href="index.html" class="btn btn-ghost text-2xl">Loopify</a>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-sm btn-outline btn-error" onclick="logout()">Logout</button>
+        </div>
+      </div>
+      <!-- start navbar -->
+      <!-- start profile -->
+      <div id="userInfo" class="mt-28 flex flex-col  items-center w-full">
+        <div class="flex justify-between w-[80%]">
+            <div class="stats shadow">
+                <div class="stat flex flex-col items-center justify-center">
+                    <div class="stat-title">Total Posts</div>
+                    <div class="stat-value">0</div>
+                    <!-- <div class="stat-desc">21% more than last month</div> -->
+                </div>
+            </div>
+            <div class="avatar flex flex-col items-center">
+                <div class="ring-primary ring-offset-base-100 w-36 rounded-full ring ring-offset-2">
+                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                </div>
+                    <h1 class="text-2xl font-semibold mt-5">...</h1>
+                    <h1 class="text-xl font-light">...</h1>
+            </div>
+            <div class="stats shadow">
+                <div class="stat flex flex-col items-center justify-center">
+                    <div class="stat-title">Total Comments</div>
+                    <div class="stat-value">0</div>
+                    <!-- <div class="stat-desc">21% more than last month</div> -->
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- end profile -->
+      <!-- start posts -->
+        <div id="userPosts" class="posts"></div>
+      <!-- end posts -->
+    <!-- <script type="module" src="main.js"></script> -->
+    <script src="profile.js"></script>
+</body>
+</html>

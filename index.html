@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Loopify</title>
+  </head>
+  <body>
+    <div class="body overflow-hidden">
+      <div id="alert" class=" fixed bottom-10 right-0 z-50 cursor-pointer opacity-100 transition-opacity duration-300" onclick="disapear()">
+        <!-- <div role="alert" class="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Your purchase has been confirmed!</span>
+        </div> -->
+      </div>
+      <!-- start navbar -->
+      <div class="navbar bg-base-100 fixed top-0 left-0 z-30 drop-shadow-md w-[390px] sm:w-full">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h7"
+                />
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li><a href="index.html">Homepage</a></li>
+              <!-- <li><a>profile</a></li> -->
+            </ul>
+          </div>
+        </div>
+        <div class="navbar-center">
+          <a href="index.html" class="btn btn-ghost text-2xl">Loopify</a>
+        </div>
+        <div class="navbar-end">
+          <div id="yourDropdownId" class="dropdown dropdown-end dropdown-hover">
+            <div tabindex="0" role="button" class="btn m-1"> <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-6 w-6 opacity-70">
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg></div>
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+              <li class="login"><a>
+              <!-- Open the modal using ID.showModal() method -->
+                <button class="btn w-36 mx-2" onclick="my_modal_2.showModal()">login</button>
+                <dialog id="my_modal_2" class="login modal">
+                  <div class="modal-box">
+                    <h3 class="text-lg font-bold">Login now!</h3>
+                    <form id="form3">
+                      <div class="login flex flex-col gap-5 my-5">
+                        <label class="input input-bordered flex items-center gap-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 16 16"
+                            fill="currentColor"
+                            class="h-4 w-4 opacity-70">
+                            <path
+                              d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                          </svg>
+                          <input id="username" type="text" class="grow" placeholder="Username" />
+                        </label>
+                        <label class="input input-bordered flex items-center gap-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 16 16"
+                            fill="currentColor"
+                            class="h-4 w-4 opacity-70">
+                            <path
+                              fill-rule="evenodd"
+                              d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          <input id="password" type="password" class="grow" placeholder="Password"/>
+                        </label>
+                        <button class="btn" onclick=login()>Submit</button>
+                      </div>
+                    </form>
+                    <p class="text-center text-red-500" id="logError"></p>
+                  </div>
+                  <form method="dialog" class="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
+              </a></li>
+              <li class="register"><a>
+                <button class="btn w-36 mx-2" onclick="my_modal_1.showModal()">Register</button>
+                <dialog id="my_modal_1" class="modal">
+                  <div class="modal-box">
+                    <h3 class="text-lg font-bold">Register now!</h3>
+                    <div class="modal-action block">
+                      <form method="dialog w-full" id="form">
+                        <label class="input input-bordered flex items-center gap-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 16 16"
+                            fill="currentColor"
+                            class="h-4 w-4 opacity-70">
+                            <path
+                              d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                            <path
+                              d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+                          </svg>
+                          <input id="regEmail" type="email" class="grow" placeholder="Email" />
+                        </label>
+                        <div class="login flex flex-col gap-5 my-5 ">
+                          <label class="input input-bordered flex items-center gap-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 16 16"
+                              fill="currentColor"
+                              class="h-4 w-4 opacity-70">
+                              <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                            </svg>
+                            <input id="regUsername" type="text" class="grow" placeholder="Username" />
+                          </label>
+                          <label class="input input-bordered flex items-center gap-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 16 16"
+                              fill="currentColor"
+                              class="h-4 w-4 opacity-70">
+                              <path
+                                fill-rule="evenodd"
+                                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                                clip-rule="evenodd" />
+                            </svg>
+                            <input id="regPassword" type="password" class="grow" value="" placeholder="Password"/>
+                          </label>
+                          <label class="input input-bordered flex items-center gap-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 16 16"
+                              fill="currentColor"
+                              class="h-4 w-4 opacity-70">
+                              <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                            </svg>
+                            <input id="name" type="text" class="" placeholder="name"/>
+                          </label>
+                          <input id="image" type="file" class="file-input file-input-bordered w-full" />
+                          <button class="btn" onclick="register()">Submit</button>
+                        </div>
+                      </form>
+                      <p class="text-center text-red-500" id="rigError"></p>
+                    </div>
+                  </div>
+                  <form method="dialog" class="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
+              </a></li>
+            </ul>
+          </div>
+          <div class="dropdown dropdown-end" id="userPic">
+            <div
+              tabindex="0"
+              role="button"
+              class="btn btn-ghost btn-circle avatar"
+            >
+              <div class="w-10 rounded-full">
+                <img
+                id="profile"
+                  alt="img"
+                  src="https://cdn.pixabay.com/photo/2021/07/02/04/48/user-6380868_1280.png"
+                />
+              </div>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <a class="justify-between" href="profile.html">
+                  Profile
+                  <span class="badge">New</span>
+                </a>
+              </li>
+              <!-- <li><a>Settings</a></li> -->
+              <li onclick="logout()"><a>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end navbar -->
+      <!-- start create post  -->
+      <div class="mt-28 w-[90%] md:w-[70%] mx-auto">
+        <div id="createPost" class="collapse bg-base-200">
+          <input type="checkbox" />
+          <div class="collapse-title text-xl font-medium">click here to create a post</div>
+          <div class="collapse-content">
+            <form id="form1" class="flex flex-col gap-5">
+              <input id="postImg" type="file" class="file-input w-full max-w-xs" />
+              <input id="postTitle" type="text" placeholder="Title" class="input w-full md:w-[70%]" />
+              <textarea
+                id="postBody"
+                placeholder="post body"
+                class="textarea textarea-bordered textarea-sm w-[70%] "></textarea>
+                <button id="createBtn" onclick="createPost()" class="btn btn-primary w-[20%] mx-auto ">Create</button>
+                <p class="text-red-500" id="postloading"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- end create post  -->
+      <!-- start posts -->
+      <div class="post mt-10">
+        <div class="flex w-[90%] lg:w-[80%] mx-auto flex-col gap-4">
+            <div class="skeleton h-40 w-full"></div>
+            <div class="skeleton h-4 w-28"></div>
+            <div class="skeleton h-4 w-full"></div>
+            <div class="skeleton h-4 w-full"></div>
+            <div class="skeleton h-40 w-full"></div>
+            <div class="skeleton h-4 w-28"></div>
+            <div class="skeleton h-4 w-full"></div>
+            <div class="skeleton h-4 w-full"></div>
+          </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
