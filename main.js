@@ -173,7 +173,7 @@ const getPosts = async (page) => {
                 <p class="text-lg">${post.body}</p>
               </div>
               <div class="card-actions flex justify-start items-center">
-                <button id="like" onclick="addLike()" class="btn btn-sm transition-all duration-300">
+                <button id="like${post.id}" onclick="addLike('like${post.id}')" class="btn btn-sm transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
                   </svg>
@@ -335,14 +335,14 @@ const addComment = (id) => {
       location.reload();
     })
     .catch((err) => {
-      console.log(err);
+      showAlert(err.response.data.message, "error")
     });
 };
 
 const showAlert = (message, status) => {
   let alertContainer = document.getElementById("alert");
   let alert = `
-  <div role="alert" class="flex items-center alert alert-${status}">
+  <div role="alert" class="min-w-[260px] w-full flex items-center alert alert-${status}">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="h-6 w-6 shrink-0 stroke-current"
@@ -371,4 +371,4 @@ if (user) {
   showAlert(`Hi ${user.name}, Hope you Ok 🤨 `, "success");
 }
 
-const addLike = () => document.getElementById("like").classList.toggle("liked");
+const addLike = (id) => document.getElementById(id).classList.toggle("liked");

@@ -15,22 +15,22 @@ const changeUi = () => {
     });
   console.log(user);
   let content = `
-    <div class="flex justify-between items-center w-[95%] md:w-[80%]">
-    <div class="stats shadow overflow-x-hidden mb-[70px]">
-        <div class="stat flex flex-col items-center justify-center">
+    <div class="flex justify-center md:justify-between items-center w-[95%] md:w-[80%]">
+    <div class=" hidden md:block stats shadow overflow-x-hidden mb-[70px]">
+        <div class="stat flex flex-col items-center justify-center px-0 md:px-6 ml-4">
             <div class="stat-title text-[12px] md:text-base">Total Posts</div>
             <div id="totalPosts" class="stat-value">0</div>
         </div>
     </div>
     <div class="avatar flex flex-col items-center">
-        <div class="ring-primary ring-offset-base-100 w-36 rounded-full ring ring-offset-2">
+        <div class="ring-primary ring-offset-base-100 w-28 md:w-36 rounded-full ring ring-offset-2">
           <img src="${user.profile_image}" />
         </div>
             <h1 class="text-2xl font-semibold mt-5">${user.username}</h1>
             <h1 class="text-xl font-light">${user.email}</h1>
     </div>
-    <div class="stats shadow overflow-x-hidden mb-[70px]">
-        <div class="stat flex flex-col items-center justify-center">
+    <div class="hidden md:block stats shadow overflow-x-hidden mb-[70px] min-w-28">
+        <div class="stat flex flex-col items-center justify-center px-0 md:px-6 mr-4">
             <div class="stat-title text-[12px] md:text-base">Total Comments</div>
             <div id="totalCom" class="stat-value ">0</div>
         </div>
